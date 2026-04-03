@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito Grupal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Tu Carrito Grupal</h1>
+    <ul>
+        {% for item in items %}
+            <li>{{ item[0] }} - ${{ item[1] }}</li>
+        {% else %}
+            <li>No hay productos en tu carrito aún.</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('home') }}"><button>Volver a Productos</button></a>
+</body>
+</html>

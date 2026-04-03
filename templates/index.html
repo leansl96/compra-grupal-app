@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1>Productos Disponibles</h1>
+
+    <a href="{{ url_for('carrito') }}">
+        <button>Ver Carrito</button>
+    </a>
+
+    <a href="{{ url_for('logout') }}">
+        <button>Cerrar sesión</button>
+    </a>
+
+    <hr>
+
+    {% for producto in productos %}
+
+        <div class="producto">
+
+            <h2>{{ producto[1] }}</h2>
+
+            <img src="{{ url_for('static', filename='img/' + producto[7]) }}" width="200">
+
+            <p><strong>Precio:</strong> ${{ producto[2] }}</p>
+
+            <p><strong>Compradores:</strong> {{ producto[5] }} / {{ producto[4] }}</p>
+
+            <!-- Barra de progreso -->
+            {% set progreso = producto[8]|default(0) %}
+            {% set color = producto[9]|default('#4caf50') %}
+
+            <div class="barra-progreso">
+                <div class="relleno"
+                     style="width: {{ progreso }}%; background-color: {{ color }};">
+                    {{ progreso }}%
+                </div>
+            </div>
+
+            <!-- Mensaje dinámico -->
+            <p>
+                {% if producto[5] >= producto[4] %}
+                    🟢 ¡Compra grupal ACTIVADA!
+                {% else %}
+                    🔥 Faltan {{ producto[4] - producto[5] }} personas
+                {% endif %}
+            </p>
+
+            <!-- Botones -->
+            <a href="{{ url_for('detalle_producto', producto_id=producto[0]) }}">
+                <button>Ver detalle</button>
+            </a>
+
+            {% if producto[5] < producto[3] %}
+                <a href="{{ url_for('unirse', producto_id=producto[0]) }}">
+                    <button>Unirse al grupo</button>
+                </a>
+            {% else %}
+                <span style="color:red;">Sin stock</span>
+            {% endif %}
+
+        </div>
+
+        <hr>
+
+    {% endfor %}
+
+</body>
+</html>

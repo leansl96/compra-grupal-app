@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    text-align: center;
+}
+h1 {
+    margin-bottom: 20px;
+}
+
+img {
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+
+/* Contenedor */
+.barra-progreso {
+    width: 50%;
+    margin: 30px auto;
+    background-color: #ddd;
+    border-radius: 20px;
+    height: 30px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+/* Relleno */
+.barra-progreso .relleno {
+    height: 100%;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    transition: width 0.6s ease-in-out;
+}
+/* Botones */
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn {
+    background-color: #2196f3;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #1976d2;
+}
+
+.btn-volver {
+    background-color: #555;
+    color: white;
+}
+
+.btn-volver:hover {
+    background-color: #333;
+}
+
+/* Texto stock agotado */
+.agotado {
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+.relleno {
+    animation: cargar 1s ease-in-out;
+}
+
+@keyframes cargar {
+    from { width: 0; }
+}

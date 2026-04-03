@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ producto[1] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1>{{ producto[1] }}</h1>
+
+    <img src="{{ url_for('static', filename='img/' + producto[7]) }}" 
+         alt="{{ producto[1] }}" width="250">
+
+    <p><strong>Precio:</strong> ${{ producto[2] }}</p>
+    <p><strong>Stock:</strong> {{ producto[3] }}</p>
+    <p><strong>Mínimo de compradores:</strong> {{ producto[4] }}</p>
+    <p><strong>Compradores actuales:</strong> {{ producto[5] }}</p>
+    <p><strong>Descripción:</strong> {{ producto[6] }}</p>
+
+    
+    <div class="barra-progreso">
+    <div class="relleno"
+         style="width: {{ producto[8]|default(0) }}%; background-color: {{ producto[9]|default('#4caf50') }};">
+        {{ producto[8]|round(0) }}%
+    </div>
+</div>
+
+    {% if producto[5] >= producto[3] %}
+        <span class="agotado">Stock agotado</span>
+    {% else %}
+        <a href="{{ url_for('unirse', producto_id=producto[0]) }}">
+            <button class="btn">Unirse al grupo</button>
+        </a>
+    {% endif %}
+
+    <br><br>
+
+    <a href="{{ url_for('home') }}">
+        <button class="btn-volver">Volver a Productos</button>
+    </a>
+
+</body>
+</html>
