@@ -7,12 +7,23 @@
 </head>
 <body>
 
-    <!-- HEADER CON LOGO -->
-    <div class="header">
-        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Empresa" class="logo">
+    <!-- NAVBAR -->
+    <div class="navbar">
+
+        <div class="nav-left">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo">
+        </div>
+
+        <div class="nav-right">
+            <a href="{{ url_for('home') }}">Productos</a>
+            <a href="#">Ofertas</a>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Registro</a>
+        </div>
+
     </div>
 
-    <!-- LOGIN CENTRADO -->
+    <!-- LOGIN -->
     <div class="login-wrapper">
         <div class="login-container">
 

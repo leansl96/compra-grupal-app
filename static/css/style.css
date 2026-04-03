@@ -58,6 +58,39 @@ h1 {
 }
 
 /* =========================
+   NAVBAR
+========================= */
+.navbar {
+    width: 100%;
+    background-color: #222;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-sizing: border-box;
+}
+
+/* Logo */
+.navbar .logo {
+    width: 140px;
+}
+
+/* Links */
+.nav-right a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.nav-right a:hover {
+    color: #2196f3;
+}
+
+
+/* =========================
    TARJETAS DE PRODUCTO
 ========================= */
 .producto {
