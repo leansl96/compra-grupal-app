@@ -6,27 +6,30 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = "clave_super_secreta"
 
-app.config['SESSION_COOKIE_SECURE'] = True
+# =========================
+# CONFIGURACIÓN
+# =========================
+# Cambiar a True en producción con HTTPS
+app.config['SESSION_COOKIE_SECURE'] = False
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, 'database.db')
-
 
 # =========================
 # CONEXIÓN DB
 # =========================
 def get_db_connection():
     conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
     return conn
-
 
 # =========================
 # FUNCIÓN PROGRESO
 # =========================
 def calcular_progreso(producto):
-    min_compradores = producto[4] if producto[4] else 1
-    compradores_actual = producto[5] if producto[5] else 0
+    min_compradores = producto['min_compradores'] if producto['min_compradores'] else 1
+    compradores_actual = producto['compradores_actual'] if producto['compradores_actual'] else 0
 
     progreso = min(100, int((compradores_actual / min_compradores) * 100))
 
@@ -38,7 +41,6 @@ def calcular_progreso(producto):
         color = '#4caf50'
 
     return progreso, color
-
 
 # =========================
 # HOME (PÚBLICO)
@@ -52,13 +54,13 @@ def home():
     conn.close()
 
     productos_final = []
-
     for p in productos:
         progreso, color = calcular_progreso(p)
-        productos_final.append(p + (progreso, color))
+        productos_final.append(dict(p))
+        productos_final[-1]['progreso'] = progreso
+        productos_final[-1]['color'] = color
 
     return render_template('index.html', productos=productos_final)
-
 
 # =========================
 # REGISTER
@@ -71,7 +73,6 @@ def register():
 
         conn = get_db_connection()
         cursor = conn.cursor()
-
         try:
             cursor.execute(
                 'INSERT INTO usuarios (nombre, password) VALUES (?, ?)',
@@ -80,13 +81,11 @@ def register():
             conn.commit()
             conn.close()
             return redirect(url_for('login'))
-
         except sqlite3.IntegrityError:
             conn.close()
             return render_template('register.html', error="Usuario ya existe")
 
     return render_template('register.html')
-
 
 # =========================
 # LOGIN
@@ -99,7 +98,6 @@ def login():
 
         conn = get_db_connection()
         cursor = conn.cursor()
-
         cursor.execute(
             'SELECT id, password FROM usuarios WHERE nombre = ?',
             (nombre,)
@@ -107,15 +105,14 @@ def login():
         user = cursor.fetchone()
         conn.close()
 
-        if user and check_password_hash(user[1], password):
-            session['usuario_id'] = user[0]
+        if user and check_password_hash(user['password'], password):
+            session['usuario_id'] = user['id']
             session['usuario_nombre'] = nombre
             return redirect(url_for('home'))
         else:
             return render_template('login.html', error="Datos incorrectos")
 
     return render_template('login.html')
-
 
 # =========================
 # LOGOUT
@@ -125,7 +122,6 @@ def logout():
     session.pop('usuario_id', None)
     session.pop('usuario_nombre', None)
     return redirect(url_for('home'))
-
 
 # =========================
 # UNIRSE AL GRUPO (PROTEGIDO)
@@ -139,7 +135,6 @@ def unirse(producto_id):
 
     conn = get_db_connection()
     cursor = conn.cursor()
-
     cursor.execute(
         'SELECT stock, compradores_actual FROM productos WHERE id = ?',
         (producto_id,)
@@ -147,14 +142,14 @@ def unirse(producto_id):
     producto = cursor.fetchone()
 
     if producto:
-        stock, compradores_actual = producto
+        stock = producto['stock'] or 0
+        compradores_actual = producto['compradores_actual'] or 0
 
         if compradores_actual < stock:
             cursor.execute(
                 'UPDATE productos SET compradores_actual = compradores_actual + 1 WHERE id = ?',
                 (producto_id,)
             )
-
             cursor.execute(
                 'INSERT INTO carrito (producto_id, usuario) VALUES (?, ?)',
                 (producto_id, usuario)
@@ -162,9 +157,7 @@ def unirse(producto_id):
 
     conn.commit()
     conn.close()
-
     return redirect(url_for('home'))
-
 
 # =========================
 # CARRITO (PROTEGIDO)
@@ -178,29 +171,25 @@ def carrito():
 
     conn = get_db_connection()
     cursor = conn.cursor()
-
     cursor.execute('''
-        SELECT p.nombre, p.precio
+        SELECT p.nombre, p.precio, COUNT(*) as cantidad
         FROM carrito c
         JOIN productos p ON c.producto_id = p.id
         WHERE c.usuario = ?
+        GROUP BY p.id
     ''', (usuario,))
-
     items = cursor.fetchall()
     conn.close()
 
     return render_template('carrito.html', items=items)
-
 
 # =========================
 # DETALLE PRODUCTO (PÚBLICO)
 # =========================
 @app.route('/producto/<int:producto_id>')
 def detalle_producto(producto_id):
-
     conn = get_db_connection()
     cursor = conn.cursor()
-
     cursor.execute('SELECT * FROM productos WHERE id = ?', (producto_id,))
     producto = cursor.fetchone()
     conn.close()
@@ -209,13 +198,14 @@ def detalle_producto(producto_id):
         return "Producto no encontrado", 404
 
     progreso, color = calcular_progreso(producto)
-    producto = producto + (progreso, color)
+    producto = dict(producto)
+    producto['progreso'] = progreso
+    producto['color'] = color
 
     return render_template('producto.html', producto=producto)
-
 
 # =========================
 # RUN
 # =========================
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    app.run(host="0.0.0.0", port=10000, debug=True)
