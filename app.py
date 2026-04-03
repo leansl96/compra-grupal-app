@@ -38,13 +38,10 @@ def calcular_progreso(producto):
 
 
 # =========================
-# HOME
+# HOME (PÚBLICO)
 # =========================
 @app.route('/')
 def home():
-    if 'usuario_id' not in session:
-        return redirect(url_for('login'))
-
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM productos')
@@ -123,11 +120,11 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('login'))
+    return redirect(url_for('home'))
 
 
 # =========================
-# UNIRSE AL GRUPO
+# UNIRSE AL GRUPO (PROTEGIDO)
 # =========================
 @app.route('/unirse/<int:producto_id>')
 def unirse(producto_id):
@@ -154,7 +151,6 @@ def unirse(producto_id):
                 (producto_id,)
             )
 
-            # Permite múltiples compras
             cursor.execute(
                 'INSERT INTO carrito (producto_id, usuario) VALUES (?, ?)',
                 (producto_id, usuario)
@@ -167,7 +163,7 @@ def unirse(producto_id):
 
 
 # =========================
-# CARRITO
+# CARRITO (PROTEGIDO)
 # =========================
 @app.route('/carrito')
 def carrito():
@@ -193,12 +189,10 @@ def carrito():
 
 
 # =========================
-# DETALLE PRODUCTO
+# DETALLE PRODUCTO (PÚBLICO)
 # =========================
 @app.route('/producto/<int:producto_id>')
 def detalle_producto(producto_id):
-    if 'usuario_id' not in session:
-        return redirect(url_for('login'))
 
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -211,7 +205,6 @@ def detalle_producto(producto_id):
         return "Producto no encontrado", 404
 
     progreso, color = calcular_progreso(producto)
-
     producto = producto + (progreso, color)
 
     return render_template('producto.html', producto=producto)
