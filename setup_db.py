@@ -5,9 +5,13 @@ from werkzeug.security import generate_password_hash
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, 'database.db')
 
-# ⚠️ Solo para desarrollo: borra la DB cada vez
+# =========================
+# ⚠️ SOLO DESARROLLO
+# =========================
+# Borra la DB cada vez que ejecutás el script
 if os.path.exists(db_path):
     os.remove(db_path)
+    print("🗑️ Base de datos anterior eliminada")
 
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
@@ -30,28 +34,48 @@ CREATE TABLE productos (
 
 # Productos de ejemplo
 productos = [
-    ("Auriculares Inalámbricos", 2500.0, 50, 5, "Auriculares bluetooth con cancelación de ruido, 20h batería.", "auriculares.jpg"),
-    ("Smartwatch Deportivo", 7500.0, 30, 3, "Smartwatch resistente al agua con monitor cardíaco.", "smartwatch.jpg"),
-    ("Teclado Mecánico", 9800.0, 20, 4, "Teclado mecánico RGB con switches azules.", "teclado.jpg"),
-    ("Mouse Gamer RGB", 3500.0, 40, 6, "Mouse ergonómico con alta precisión.", "mouse.jpg")
+    (
+        "Auriculares Inalámbricos",
+        2500.0,
+        50,
+        5,
+        "Auriculares bluetooth con cancelación de ruido, 20h batería.",
+        "auriculares.jpg"
+    ),
+    (
+        "Smartwatch Deportivo",
+        7500.0,
+        30,
+        3,
+        "Smartwatch resistente al agua con monitor cardíaco.",
+        "smartwatch.jpg"
+    ),
+    (
+        "Teclado Mecánico",
+        9800.0,
+        20,
+        4,
+        "Teclado mecánico RGB con switches azules.",
+        "teclado.jpg"
+    ),
+    (
+        "Mouse Gamer RGB",
+        3500.0,
+        40,
+        6,
+        "Mouse ergonómico con alta precisión.",
+        "mouse.jpg"
+    )
 ]
 
 cursor.executemany('''
-INSERT INTO productos (nombre, precio, stock, min_compradores, descripcion, imagen)
+INSERT INTO productos (
+    nombre, precio, stock, min_compradores, descripcion, imagen
+)
 VALUES (?, ?, ?, ?, ?, ?)
 ''', productos)
 
-# =========================
-# TABLA CARRITO
-# =========================
-cursor.execute('''
-CREATE TABLE carrito (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    producto_id INTEGER NOT NULL,
-    usuario TEXT NOT NULL,
-    FOREIGN KEY (producto_id) REFERENCES productos(id)
-)
-''')
+print("📦 Productos cargados")
 
 # =========================
 # TABLA USUARIOS
@@ -65,11 +89,30 @@ CREATE TABLE usuarios (
 ''')
 
 # Usuario demo
-cursor.execute(
-    'INSERT INTO usuarios (nombre, password) VALUES (?, ?)',
-    ("demo", generate_password_hash("1234"))
-)
+cursor.execute('''
+INSERT INTO usuarios (nombre, password)
+VALUES (?, ?)
+''', ("demo", generate_password_hash("1234")))
 
+print("👤 Usuario demo creado (usuario: demo / pass: 1234)")
+
+# =========================
+# TABLA CARRITO
+# =========================
+cursor.execute('''
+CREATE TABLE carrito (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    producto_id INTEGER NOT NULL,
+    usuario TEXT NOT NULL,
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
+)
+''')
+
+print("🛒 Carrito creado")
+
+# =========================
+# GUARDAR CAMBIOS
+# =========================
 conn.commit()
 conn.close()
 

@@ -9,6 +9,34 @@ app.secret_key = "clave_super_secreta"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, 'database.db')
 
+
+# =========================
+# CONEXIÓN DB
+# =========================
+def get_db_connection():
+    conn = sqlite3.connect(db_path)
+    return conn
+
+
+# =========================
+# FUNCIÓN PROGRESO
+# =========================
+def calcular_progreso(producto):
+    min_compradores = producto[4] if producto[4] else 1
+    compradores_actual = producto[5] if producto[5] else 0
+
+    progreso = min(100, int((compradores_actual / min_compradores) * 100))
+
+    if progreso < 50:
+        color = '#f44336'
+    elif progreso < 100:
+        color = '#ffeb3b'
+    else:
+        color = '#4caf50'
+
+    return progreso, color
+
+
 # =========================
 # HOME
 # =========================
@@ -17,30 +45,20 @@ def home():
     if 'usuario_id' not in session:
         return redirect(url_for('login'))
 
-    conn = sqlite3.connect(db_path)
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM productos')
     productos = cursor.fetchall()
     conn.close()
 
-    productos_colores = []
+    productos_final = []
 
     for p in productos:
-        min_compradores = p[4] if p[4] else 1
-        compradores_actual = p[5] if p[5] else 0
+        progreso, color = calcular_progreso(p)
+        productos_final.append(p + (progreso, color))
 
-        progreso = min(100, int((compradores_actual / min_compradores) * 100))
+    return render_template('index.html', productos=productos_final)
 
-        if progreso < 50:
-            color = '#f44336'
-        elif progreso < 100:
-            color = '#ffeb3b'
-        else:
-            color = '#4caf50'
-
-        productos_colores.append(p + (progreso, color))
-
-    return render_template('index.html', productos=productos_colores)
 
 # =========================
 # REGISTER
@@ -51,7 +69,7 @@ def register():
         nombre = request.form['nombre']
         password = generate_password_hash(request.form['password'])
 
-        conn = sqlite3.connect(db_path)
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         try:
@@ -62,11 +80,13 @@ def register():
             conn.commit()
             conn.close()
             return redirect(url_for('login'))
+
         except sqlite3.IntegrityError:
             conn.close()
             return render_template('register.html', error="Usuario ya existe")
 
     return render_template('register.html')
+
 
 # =========================
 # LOGIN
@@ -77,8 +97,9 @@ def login():
         nombre = request.form['nombre']
         password = request.form['password']
 
-        conn = sqlite3.connect(db_path)
+        conn = get_db_connection()
         cursor = conn.cursor()
+
         cursor.execute(
             'SELECT id, password FROM usuarios WHERE nombre = ?',
             (nombre,)
@@ -95,6 +116,7 @@ def login():
 
     return render_template('login.html')
 
+
 # =========================
 # LOGOUT
 # =========================
@@ -102,6 +124,7 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('login'))
+
 
 # =========================
 # UNIRSE AL GRUPO
@@ -113,7 +136,7 @@ def unirse(producto_id):
 
     usuario = session['usuario_nombre']
 
-    conn = sqlite3.connect(db_path)
+    conn = get_db_connection()
     cursor = conn.cursor()
 
     cursor.execute(
@@ -131,7 +154,7 @@ def unirse(producto_id):
                 (producto_id,)
             )
 
-            # Permite comprar múltiples veces
+            # Permite múltiples compras
             cursor.execute(
                 'INSERT INTO carrito (producto_id, usuario) VALUES (?, ?)',
                 (producto_id, usuario)
@@ -141,6 +164,7 @@ def unirse(producto_id):
     conn.close()
 
     return redirect(url_for('home'))
+
 
 # =========================
 # CARRITO
@@ -152,7 +176,7 @@ def carrito():
 
     usuario = session['usuario_nombre']
 
-    conn = sqlite3.connect(db_path)
+    conn = get_db_connection()
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -167,6 +191,7 @@ def carrito():
 
     return render_template('carrito.html', items=items)
 
+
 # =========================
 # DETALLE PRODUCTO
 # =========================
@@ -175,8 +200,9 @@ def detalle_producto(producto_id):
     if 'usuario_id' not in session:
         return redirect(url_for('login'))
 
-    conn = sqlite3.connect(db_path)
+    conn = get_db_connection()
     cursor = conn.cursor()
+
     cursor.execute('SELECT * FROM productos WHERE id = ?', (producto_id,))
     producto = cursor.fetchone()
     conn.close()
@@ -184,21 +210,12 @@ def detalle_producto(producto_id):
     if not producto:
         return "Producto no encontrado", 404
 
-    min_compradores = producto[4] if producto[4] else 1
-    compradores_actual = producto[5] if producto[5] else 0
-
-    progreso = min(100, int((compradores_actual / min_compradores) * 100))
-
-    if progreso < 50:
-        color = '#f44336'
-    elif progreso < 100:
-        color = '#ffeb3b'
-    else:
-        color = '#4caf50'
+    progreso, color = calcular_progreso(producto)
 
     producto = producto + (progreso, color)
 
     return render_template('producto.html', producto=producto)
+
 
 # =========================
 # RUN

@@ -12,32 +12,44 @@
     <img src="{{ url_for('static', filename='img/' + producto[7]) }}" 
          alt="{{ producto[1] }}" width="250">
 
-    <p><strong>Precio:</strong> ${{ producto[2] }}</p>
-    <p><strong>Stock:</strong> {{ producto[3] }}</p>
-    <p><strong>Mínimo de compradores:</strong> {{ producto[4] }}</p>
-    <p><strong>Compradores actuales:</strong> {{ producto[5] }}</p>
-    <p><strong>Descripción:</strong> {{ producto[6] }}</p>
+    <p><strong>💲 Precio:</strong> ${{ producto[2] }}</p>
+    <p><strong>📦 Stock:</strong> {{ producto[3] }}</p>
+    <p><strong>👥 Mínimo:</strong> {{ producto[4] }}</p>
+    <p><strong>🙋 Compradores:</strong> {{ producto[5] }}</p>
+    <p><strong>📝 Descripción:</strong> {{ producto[6] }}</p>
 
-    
+    <!-- BARRA DE PROGRESO -->
     <div class="barra-progreso">
-    <div class="relleno"
-         style="width: {{ producto[8]|default(0) }}%; background-color: {{ producto[9]|default('#4caf50') }};">
-        {{ producto[8]|round(0) }}%
+        <div class="relleno"
+             style="width: {{ producto[8]|default(0) }}%; background-color: {{ producto[9]|default('#4caf50') }};">
+            {{ producto[8]|round(0) }}%
+        </div>
     </div>
-</div>
 
-    {% if producto[5] >= producto[3] %}
-        <span class="agotado">Stock agotado</span>
+    <!-- MENSAJE DINÁMICO -->
+    {% if producto[5] >= producto[4] %}
+        <p style="color: green; font-weight: bold;">
+            🎉 ¡Compra grupal ACTIVADA!
+        </p>
+    {% else %}
+        <p style="color: orange; font-weight: bold;">
+            🔥 Faltan {{ producto[4] - producto[5] }} personas para activar la compra
+        </p>
+    {% endif %}
+
+    <!-- ESTADO STOCK -->
+    {% if producto[3] <= 0 %}
+        <p class="agotado">❌ Sin stock</p>
     {% else %}
         <a href="{{ url_for('unirse', producto_id=producto[0]) }}">
-            <button class="btn">Unirse al grupo</button>
+            <button class="btn">🛒 Unirme al grupo</button>
         </a>
     {% endif %}
 
     <br><br>
 
     <a href="{{ url_for('home') }}">
-        <button class="btn-volver">Volver a Productos</button>
+        <button class="btn-volver">⬅ Volver a Productos</button>
     </a>
 
 </body>

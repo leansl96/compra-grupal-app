@@ -1,22 +1,49 @@
+/* =========================
+   ESTILO GENERAL
+========================= */
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
     text-align: center;
-}
-h1 {
-    margin-bottom: 20px;
+    margin: 0;
+    padding: 0;
 }
 
+h1 {
+    margin: 20px 0;
+}
+
+/* =========================
+   TARJETAS DE PRODUCTO
+========================= */
+.producto {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 320px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.producto:hover {
+    transform: scale(1.03);
+}
+
+/* =========================
+   IMÁGENES
+========================= */
 img {
     border-radius: 10px;
     margin-bottom: 10px;
 }
 
-
-/* Contenedor */
+/* =========================
+   BARRA DE PROGRESO
+========================= */
 .barra-progreso {
-    width: 50%;
-    margin: 30px auto;
+    width: 70%;
+    margin: 20px auto;
     background-color: #ddd;
     border-radius: 20px;
     height: 30px;
@@ -24,7 +51,6 @@ img {
     box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
 
-/* Relleno */
 .barra-progreso .relleno {
     height: 100%;
     line-height: 30px;
@@ -32,16 +58,28 @@ img {
     font-weight: bold;
     text-align: center;
     transition: width 0.6s ease-in-out;
+    animation: cargar 1s ease-in-out;
 }
-/* Botones */
+
+/* Animación carga */
+@keyframes cargar {
+    from { width: 0; }
+}
+
+/* =========================
+   BOTONES
+========================= */
 button {
     padding: 10px 15px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    margin: 5px;
+    transition: 0.3s;
 }
 
+/* Botón principal */
 .btn {
     background-color: #2196f3;
     color: white;
@@ -49,8 +87,10 @@ button {
 
 .btn:hover {
     background-color: #1976d2;
+    transform: scale(1.05);
 }
 
+/* Botón volver */
 .btn-volver {
     background-color: #555;
     color: white;
@@ -60,18 +100,48 @@ button {
     background-color: #333;
 }
 
-/* Texto stock agotado */
+/* Botón carrito */
+.btn-carrito {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-carrito:hover {
+    background-color: #388e3c;
+}
+
+/* Botón logout */
+.btn-logout {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-logout:hover {
+    background-color: #c62828;
+}
+
+/* =========================
+   TEXTO Y MENSAJES
+========================= */
 .agotado {
     color: red;
     font-weight: bold;
     font-size: 18px;
 }
 
-
-.relleno {
-    animation: cargar 1s ease-in-out;
+.mensaje-exito {
+    color: green;
+    font-weight: bold;
 }
 
-@keyframes cargar {
-    from { width: 0; }
+.mensaje-alerta {
+    color: orange;
+    font-weight: bold;
+}
+
+/* =========================
+   CONTENEDOR BOTONES TOP
+========================= */
+.top-bar {
+    margin-bottom: 20px;
 }
