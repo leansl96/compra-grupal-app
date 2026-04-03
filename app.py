@@ -6,6 +6,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = "clave_super_secreta"
 
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, 'database.db')
 
@@ -119,7 +122,8 @@ def login():
 # =========================
 @app.route('/logout')
 def logout():
-    session.clear()
+    session.pop('usuario_id', None)
+    session.pop('usuario_nombre', None)
     return redirect(url_for('home'))
 
 
