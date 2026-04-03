@@ -1,72 +1,30 @@
 /* =========================
-   RESET & BASE
+   GENERAL
 ========================= */
-* {
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    text-align: center;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    background: linear-gradient(135deg, #eef2f7, #dfe9f3);
-    color: #333;
+h1 {
+    margin: 20px 0;
 }
 
 /* =========================
-   NAVBAR
+   HEADER (LOGO)
 ========================= */
-.navbar {
+.header {
     width: 100%;
-    background: #1f1f1f;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    padding: 20px 40px;
+    box-sizing: border-box;
+    text-align: left;
 }
 
-/* Logo */
 .logo {
-    width: 150px;
-    transition: 0.3s;
-}
-
-.logo:hover {
-    transform: scale(1.05);
-}
-
-/* Links */
-.nav-right a {
-    color: white;
-    text-decoration: none;
-    margin-left: 25px;
-    font-weight: 600;
-    position: relative;
-    transition: 0.3s;
-}
-
-.nav-right a::after {
-    content: "";
-    width: 0%;
-    height: 2px;
-    background: #2196f3;
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    transition: 0.3s;
-}
-
-.nav-right a:hover::after {
-    width: 100%;
-}
-
-.nav-right a:hover {
-    color: #2196f3;
-}
-
-.nav-right .active {
-    color: #2196f3;
+    width: 180px;
 }
 
 /* =========================
@@ -76,105 +34,79 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 85vh;
+    height: 70vh;
 }
 
 .login-container {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    width: 340px;
-    padding: 35px;
-    border-radius: 16px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    animation: fadeIn 0.6s ease-in-out;
+    background: white;
+    width: 320px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .login-container h2 {
     margin-bottom: 20px;
 }
 
-/* Inputs */
-.login-form input {
-    width: 100%;
-    padding: 12px;
+.login-container input {
+    width: 90%;
+    padding: 10px;
     margin: 10px 0;
-    border-radius: 10px;
+    border-radius: 8px;
     border: 1px solid #ccc;
-    outline: none;
-    transition: 0.3s;
-}
-
-.login-form input:focus {
-    border-color: #2196f3;
-    box-shadow: 0 0 5px rgba(33,150,243,0.5);
-}
-
-/* Extra */
-.login-extra {
-    margin-top: 15px;
-}
-
-.link-registro {
-    display: inline-block;
-    margin-top: 8px;
-    color: #2196f3;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.link-registro:hover {
-    text-decoration: underline;
 }
 
 /* =========================
-   PRODUCTOS (GRID PRO)
+   TARJETAS DE PRODUCTO
 ========================= */
-.productos-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-    padding: 40px;
-}
-
 .producto {
     background: white;
     padding: 20px;
-    border-radius: 14px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-    transition: 0.3s;
+    margin: 20px auto;
+    width: 320px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
 }
 
 .producto:hover {
-    transform: translateY(-5px);
+    transform: scale(1.03);
 }
 
-/* PRODUCTOS */
-.producto img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
+/* =========================
+   IMÁGENES
+========================= */
+img {
     border-radius: 10px;
+    margin-bottom: 10px;
 }
+
 /* =========================
    BARRA DE PROGRESO
 ========================= */
 .barra-progreso {
-    width: 100%;
-    margin: 15px 0;
+    width: 70%;
+    margin: 20px auto;
     background-color: #ddd;
     border-radius: 20px;
-    height: 25px;
+    height: 30px;
     overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
 
 .barra-progreso .relleno {
     height: 100%;
-    line-height: 25px;
+    line-height: 30px;
     color: white;
-    font-size: 14px;
     font-weight: bold;
     text-align: center;
     transition: width 0.6s ease-in-out;
+    animation: cargar 1s ease-in-out;
+}
+
+@keyframes cargar {
+    from { width: 0; }
 }
 
 /* =========================
@@ -183,79 +115,105 @@ body {
 button {
     padding: 10px 15px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    margin: 5px;
     transition: 0.3s;
 }
 
-/* Principal */
+/* Botón principal */
 .btn {
-    background: #2196f3;
+    background-color: #2196f3;
     color: white;
 }
 
 .btn:hover {
-    background: #1976d2;
+    background-color: #1976d2;
     transform: scale(1.05);
 }
 
-/* Login */
+/* Botón login */
 .btn-login {
-    background: #4caf50;
+    background-color: #4caf50;
     color: white;
     width: 100%;
 }
 
 .btn-login:hover {
-    background: #388e3c;
+    background-color: #388e3c;
+    transform: scale(1.03);
 }
 
-/* Registro */
+/* Botón registro */
 .btn-registro {
-    background: #2196f3;
+    background-color: #2196f3;
     color: white;
     width: 100%;
 }
 
 .btn-registro:hover {
-    background: #1976d2;
+    background-color: #1976d2;
+    transform: scale(1.03);
+}
+
+/* Botón volver */
+.btn-volver {
+    background-color: #555;
+    color: white;
+}
+
+.btn-volver:hover {
+    background-color: #333;
+}
+
+/* Botón carrito */
+.btn-carrito {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-carrito:hover {
+    background-color: #388e3c;
+}
+
+/* Botón logout */
+.btn-logout {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-logout:hover {
+    background-color: #c62828;
 }
 
 /* =========================
-   MENSAJES
+   TEXTOS Y MENSAJES
 ========================= */
 .error {
-    color: #f44336;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.mensaje-exito {
-    color: #4caf50;
-    font-weight: bold;
-}
-
-.mensaje-alerta {
-    color: #ff9800;
+    color: red;
     font-weight: bold;
 }
 
 .agotado {
-    color: #f44336;
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.mensaje-exito {
+    color: green;
+    font-weight: bold;
+}
+
+.mensaje-alerta {
+    color: orange;
     font-weight: bold;
 }
 
 /* =========================
-   ANIMACIONES
+   CONTENEDORES
 ========================= */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.top-bar {
+    margin-bottom: 20px;
 }

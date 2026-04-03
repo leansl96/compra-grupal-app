@@ -3,42 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-    <!-- ========================= -->
-    <!-- NAVBAR -->
-    <!-- ========================= -->
-    <nav class="navbar">
+    <!-- HEADER CON LOGO -->
+    <div class="header">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Empresa" class="logo">
+    </div>
 
-        <div class="nav-left">
-            <a href="{{ url_for('home') }}">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo">
-            </a>
-        </div>
-
-        <div class="nav-right">
-            <a href="{{ url_for('home') }}">Productos</a>
-            <a href="#">Ofertas</a>
-
-            {% if session.get('usuario_id') %}
-                <a href="{{ url_for('carrito') }}">Carrito</a>
-                <a href="{{ url_for('logout') }}">Salir</a>
-            {% else %}
-                <a href="{{ url_for('login') }}" class="active">Login</a>
-                <a href="{{ url_for('register') }}">Registro</a>
-            {% endif %}
-        </div>
-
-    </nav>
-
-    <!-- ========================= -->
-    <!-- LOGIN -->
-    <!-- ========================= -->
-    <main class="login-wrapper">
+    <!-- LOGIN CENTRADO -->
+    <div class="login-wrapper">
         <div class="login-container">
 
             <h2>🔐 Iniciar Sesión</h2>
@@ -47,40 +22,20 @@
                 <p class="error">{{ error }}</p>
             {% endif %}
 
-            <form method="POST" class="login-form">
-
-                <input 
-                    type="text" 
-                    name="nombre" 
-                    placeholder="Usuario" 
-                    required 
-                    autocomplete="username"
-                >
-
-                <input 
-                    type="password" 
-                    name="password" 
-                    placeholder="Contraseña" 
-                    required 
-                    autocomplete="current-password"
-                >
-
-                <button type="submit" class="btn-login">
-                    Ingresar
-                </button>
-
+            <form method="POST">
+                <input type="text" name="nombre" placeholder="Usuario" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <button type="submit" class="btn-login">Ingresar</button>
             </form>
 
-            <div class="login-extra">
-                <p>¿No tenés cuenta?</p>
+            <p>¿No tenés cuenta?</p>
 
-                <a href="{{ url_for('register') }}" class="link-registro">
-                    Crear cuenta
-                </a>
-            </div>
+            <a href="{{ url_for('register') }}">
+                <button class="btn-registro">Registrarse</button>
+            </a>
 
         </div>
-    </main>
+    </div>
 
 </body>
 </html>
