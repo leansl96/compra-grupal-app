@@ -25,53 +25,45 @@
 
         <div class="producto">
 
-            <h2>{{ producto[1] }}</h2>
+            <h2>{{ producto['nombre'] }}</h2>
 
-            <img src="{{ url_for('static', filename='img/' + producto[7]) }}" width="200">
+            <img src="{{ url_for('static', filename='img/' + producto['imagen']) }}" width="200">
 
-            <p><strong>💲 Precio:</strong> ${{ producto[2] }}</p>
+            <p><strong>💲 Precio:</strong> ${{ producto['precio'] }}</p>
 
-            <p><strong>👥 Compradores:</strong> {{ producto[5] }} / {{ producto[4] }}</p>
+            <p><strong>👥 Compradores:</strong> {{ producto['compradores_actual'] }} / {{ producto['min_compradores'] }}</p>
 
             <!-- Barra de progreso CALCULADA -->
-            {% set progreso = (producto[5] / producto[4]) * 100 if producto[4] > 0 else 0 %}
+            {% set progreso = (producto['compradores_actual'] / producto['min_compradores']) * 100 if producto['min_compradores'] > 0 else 0 %}
             {% if progreso > 100 %}
                 {% set progreso = 100 %}
             {% endif %}
 
-            {% if progreso < 50 %}
-                {% set color = '#f44336' %}
-            {% elif progreso < 100 %}
-                {% set color = '#ffeb3b' %}
-            {% else %}
-                {% set color = '#4caf50' %}
-            {% endif %}
-
             <div class="barra-progreso">
                 <div class="relleno"
-                     style="width: {{ progreso }}%; background-color: {{ color }};">
+                     style="width: {{ progreso }}%; background-color: {{ producto['color'] }};">
                     {{ progreso|round(0) }}%
                 </div>
             </div>
 
             <!-- Mensaje dinámico -->
-            {% if producto[5] >= producto[4] %}
+            {% if producto['compradores_actual'] >= producto['min_compradores'] %}
                 <p style="color: green; font-weight: bold;">
                     🎉 ¡Compra grupal ACTIVADA!
                 </p>
             {% else %}
                 <p style="color: orange; font-weight: bold;">
-                    🔥 Faltan {{ producto[4] - producto[5] }} personas
+                    🔥 Faltan {{ producto['min_compradores'] - producto['compradores_actual'] }} personas
                 </p>
             {% endif %}
 
             <!-- Botones -->
-            <a href="{{ url_for('detalle_producto', producto_id=producto[0]) }}">
+            <a href="{{ url_for('detalle_producto', producto_id=producto['id']) }}">
                 <button>🔍 Ver detalle</button>
             </a>
 
-            {% if producto[3] > 0 %}
-                <a href="{{ url_for('unirse', producto_id=producto[0]) }}">
+            {% if producto['stock'] > 0 %}
+                <a href="{{ url_for('unirse', producto_id=producto['id']) }}">
                     <button>🛒 Unirse al grupo</button>
                 </a>
             {% else %}
