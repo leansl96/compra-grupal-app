@@ -2,57 +2,6 @@
    ESTILO GENERAL
 ========================= */
 
-/* =========================
-   LOGIN
-========================= */
-
-.login-container {
-    background: white;
-    width: 300px;
-    margin: 100px auto;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-.login-container h2 {
-    margin-bottom: 20px;
-}
-
-.login-container input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-.btn-login {
-    background-color: #4caf50;
-    color: white;
-    width: 100%;
-}
-
-.btn-login:hover {
-    background-color: #388e3c;
-}
-
-.btn-registro {
-    background-color: #2196f3;
-    color: white;
-    width: 100%;
-}
-
-.btn-registro:hover {
-    background-color: #1976d2;
-}
-
-.error {
-    color: red;
-    font-weight: bold;
-}
-
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
@@ -196,4 +145,55 @@ button {
 ========================= */
 .top-bar {
     margin-bottom: 20px;
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-container {
+    background: white;
+    width: 300px;
+    margin: 100px auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+}
+
+.login-container input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.btn-login {
+    background-color: #4caf50;
+    color: white;
+    width: 100%;
+}
+
+.btn-login:hover {
+    background-color: #388e3c;
+}
+
+.btn-registro {
+    background-color: #2196f3;
+    color: white;
+    width: 100%;
+}
+
+.btn-registro:hover {
+    background-color: #1976d2;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
 }
