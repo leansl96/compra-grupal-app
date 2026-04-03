@@ -6,36 +6,35 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    
-    
-    <div class="logo-container">
-    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Empresa">
-</div>
 
-    <div class="login-container">
+    <!-- HEADER CON LOGO -->
+    <div class="header">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Empresa" class="logo">
+    </div>
 
-        <h2>🔐 Iniciar Sesión</h2>
+    <!-- LOGIN CENTRADO -->
+    <div class="login-wrapper">
+        <div class="login-container">
 
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
+            <h2>🔐 Iniciar Sesión</h2>
 
-        <form method="POST">
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
 
-            <input type="text" name="nombre" placeholder="Usuario" required>
+            <form method="POST">
+                <input type="text" name="nombre" placeholder="Usuario" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <button type="submit" class="btn-login">Ingresar</button>
+            </form>
 
-            <input type="password" name="password" placeholder="Contraseña" required>
+            <p>¿No tenés cuenta?</p>
 
-            <button type="submit" class="btn-login">Ingresar</button>
+            <a href="{{ url_for('register') }}">
+                <button class="btn-registro">Registrarse</button>
+            </a>
 
-        </form>
-
-        <p>¿No tenés cuenta?</p>
-
-        <a href="{{ url_for('register') }}">
-            <button class="btn-registro">Registrarse</button>
-        </a>
-
+        </div>
     </div>
 
 </body>

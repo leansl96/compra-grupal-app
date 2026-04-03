@@ -1,17 +1,60 @@
 /* =========================
-   ESTILO GENERAL
+   GENERAL
 ========================= */
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
-    text-align: center;
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 
 h1 {
     margin: 20px 0;
+}
+
+/* =========================
+   HEADER (LOGO)
+========================= */
+.header {
+    width: 100%;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.logo {
+    width: 180px;
+}
+
+/* =========================
+   LOGIN
+========================= */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+.login-container {
+    background: white;
+    width: 320px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+}
+
+.login-container input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }
 
 /* =========================
@@ -62,7 +105,6 @@ img {
     animation: cargar 1s ease-in-out;
 }
 
-/* Animación carga */
 @keyframes cargar {
     from { width: 0; }
 }
@@ -89,6 +131,30 @@ button {
 .btn:hover {
     background-color: #1976d2;
     transform: scale(1.05);
+}
+
+/* Botón login */
+.btn-login {
+    background-color: #4caf50;
+    color: white;
+    width: 100%;
+}
+
+.btn-login:hover {
+    background-color: #388e3c;
+    transform: scale(1.03);
+}
+
+/* Botón registro */
+.btn-registro {
+    background-color: #2196f3;
+    color: white;
+    width: 100%;
+}
+
+.btn-registro:hover {
+    background-color: #1976d2;
+    transform: scale(1.03);
 }
 
 /* Botón volver */
@@ -122,8 +188,13 @@ button {
 }
 
 /* =========================
-   TEXTO Y MENSAJES
+   TEXTOS Y MENSAJES
 ========================= */
+.error {
+    color: red;
+    font-weight: bold;
+}
+
 .agotado {
     color: red;
     font-weight: bold;
@@ -141,74 +212,8 @@ button {
 }
 
 /* =========================
-   CONTENEDOR BOTONES TOP
+   CONTENEDORES
 ========================= */
 .top-bar {
     margin-bottom: 20px;
-}
-
-
-/* =========================
-   LOGIN
-========================= */
-
-.login-container {
-    background: white;
-    width: 300px;
-    margin: 100px auto;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-.login-container h2 {
-    margin-bottom: 20px;
-}
-
-.login-container input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-.btn-login {
-    background-color: #4caf50;
-    color: white;
-    width: 100%;
-}
-
-.btn-login:hover {
-    background-color: #388e3c;
-}
-
-.btn-registro {
-    background-color: #2196f3;
-    color: white;
-    width: 100%;
-}
-
-.btn-registro:hover {
-    background-color: #1976d2;
-}
-
-.error {
-    color: red;
-    font-weight: bold;
-}
-
-/* =========================
-   LOGO SUPERIOR
-========================= */
-
-.logo-container {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-}
-
-.logo-container img {
-    width: 120px;
-    height: auto;
 }
