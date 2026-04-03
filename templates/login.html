@@ -6,15 +6,32 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Iniciar Sesión</h1>
-    {% if error %}
-        <p style="color:red;">{{ error }}</p>
-    {% endif %}
-    <form method="POST">
-        <input type="text" name="nombre" placeholder="Usuario" required><br><br>
-        <input type="password" name="password" placeholder="Contraseña" required><br><br>
-        <button type="submit">Entrar</button>
-        <p>¿No tienes cuenta? <a href="{{ url_for('register') }}">Regístrate aquí</a></p>
-    </form>
+
+    <div class="login-container">
+
+        <h2>🔐 Iniciar Sesión</h2>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+
+            <input type="text" name="nombre" placeholder="Usuario" required>
+
+            <input type="password" name="password" placeholder="Contraseña" required>
+
+            <button type="submit" class="btn-login">Ingresar</button>
+
+        </form>
+
+        <p>¿No tenés cuenta?</p>
+
+        <a href="{{ url_for('register') }}">
+            <button class="btn-registro">Registrarse</button>
+        </a>
+
+    </div>
+
 </body>
 </html>
