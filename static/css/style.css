@@ -33,6 +33,81 @@ h1 {
 }
 
 /* =========================
+   NAVBAR PRO
+========================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #232f3e;
+    padding: 10px 30px;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* =========================
+   BUSCADOR PRO
+========================= */
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 25px;
+    padding: 2px;
+}
+
+/* INPUT */
+.search-box input {
+    width: 260px;
+    padding: 10px 40px 10px 15px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+/* LUPA (SIN FONDO) */
+.search-btn {
+    all: unset; /* 🔥 elimina TODOS los estilos de botón */
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+}
+
+/* HOVER */
+.search-btn:hover {
+    transform: scale(1.2);
+    color: #000;
+}
+
+/* =========================
+   NAV LINKS
+========================= */
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right a {
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.nav-right a:hover {
+    color: #ff9900;
+}
+
+.logout {
+    color: #ff4d4d;
+}
+
+/* =========================
    LOGIN
 ========================= */
 .login-wrapper {
@@ -41,6 +116,7 @@ h1 {
     align-items: center;
     height: calc(100vh - 80px);
 }
+
 .login-container {
     background: white;
     width: 320px;
@@ -62,20 +138,20 @@ h1 {
 }
 
 /* =========================
-   TARJETAS DE PRODUCTO
+   TARJETAS
 ========================= */
 .producto {
     background: white;
     padding: 20px;
     margin: 20px auto;
     width: 320px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    transition: 0.3s;
 }
 
 .producto:hover {
-    transform: scale(1.03);
+    transform: translateY(-5px);
 }
 
 /* =========================
@@ -87,7 +163,7 @@ img {
 }
 
 /* =========================
-   BARRA DE PROGRESO
+   PROGRESO
 ========================= */
 .barra-progreso {
     width: 70%;
@@ -119,80 +195,47 @@ img {
 button {
     padding: 10px 15px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: bold;
-    margin: 5px;
     transition: 0.3s;
 }
 
-/* Botón principal */
+/* VARIANTES */
 .btn {
-    background-color: #2196f3;
+    background: linear-gradient(45deg, #2196f3, #1976d2);
     color: white;
 }
 
-.btn:hover {
-    background-color: #1976d2;
-    transform: scale(1.05);
-}
-
-/* Botón login */
 .btn-login {
-    background-color: #4caf50;
+    background: linear-gradient(45deg, #4caf50, #388e3c);
     color: white;
     width: 100%;
 }
 
-.btn-login:hover {
-    background-color: #388e3c;
-    transform: scale(1.03);
-}
-
-/* Botón registro */
 .btn-registro {
-    background-color: #2196f3;
+    background: linear-gradient(45deg, #2196f3, #1976d2);
     color: white;
     width: 100%;
 }
 
-.btn-registro:hover {
-    background-color: #1976d2;
-    transform: scale(1.03);
-}
-
-/* Botón volver */
 .btn-volver {
     background-color: #555;
     color: white;
 }
 
-.btn-volver:hover {
-    background-color: #333;
-}
-
-/* Botón carrito */
 .btn-carrito {
     background-color: #4caf50;
     color: white;
 }
 
-.btn-carrito:hover {
-    background-color: #388e3c;
-}
-
-/* Botón logout */
 .btn-logout {
-    background-color: #f44336;
+    background: linear-gradient(45deg, #f44336, #c62828);
     color: white;
 }
 
-.btn-logout:hover {
-    background-color: #c62828;
-}
-
 /* =========================
-   TEXTOS Y MENSAJES
+   MENSAJES
 ========================= */
 .error {
     color: red;
@@ -213,64 +256,4 @@ button {
 .mensaje-alerta {
     color: orange;
     font-weight: bold;
-}
-
-/* =========================
-   CONTENEDORES
-========================= */
-.top-bar {
-    margin-bottom: 20px;
-}
-
-/* NAVBAR */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #232f3e;
-    padding: 10px 20px;
-    color: white;
-}
-
-/* Logo */
-.logo {
-    font-size: 22px;
-    font-weight: bold;
-    color: #ff9900;
-    text-decoration: none;
-}
-
-/* Buscador */
-.nav-center form {
-    display: flex;
-}
-
-.nav-center input {
-    padding: 5px;
-    border-radius: 4px 0 0 4px;
-    border: none;
-    width: 200px;
-}
-
-.nav-center button {
-    padding: 5px 10px;
-    border: none;
-    background-color: #ff9900;
-    cursor: pointer;
-}
-
-/* Links derecha */
-.nav-right a {
-    margin-left: 15px;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.nav-right a:hover {
-    text-decoration: underline;
-}
-
-.logout {
-    color: #ff4d4d;
 }
