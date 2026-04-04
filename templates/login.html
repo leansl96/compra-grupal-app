@@ -6,12 +6,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-
-    <!-- HEADER CON LOGO -->
-    <div class="header">
-        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Empresa" class="logo">
-    </div>
-
+{% include 'navbar.html' %}
+  
     <!-- LOGIN CENTRADO -->
     <div class="login-wrapper">
         <div class="login-container">

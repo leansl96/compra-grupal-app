@@ -42,9 +42,19 @@ def calcular_progreso(producto):
 # =========================
 @app.route('/')
 def home():
+    busqueda = request.args.get('q')  # 👈 AGREGAR ESTO
+
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM productos')
+
+    if busqueda:
+        cursor.execute(
+            "SELECT * FROM productos WHERE nombre LIKE ?",
+            ('%' + busqueda + '%',)
+        )
+    else:
+        cursor.execute('SELECT * FROM productos')
+
     productos = cursor.fetchall()
     conn.close()
 
@@ -83,6 +93,24 @@ def register():
             return render_template('register.html', error="Usuario ya existe")
 
     return render_template('register.html')
+
+
+# CONTADOR DE CARRITO
+@app.context_processor
+def inject_carrito_count():
+    if 'usuario_nombre' in session:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT COUNT(*) FROM carrito WHERE usuario = ?",
+            (session['usuario_nombre'],)
+        )
+        count = cursor.fetchone()[0]
+        conn.close()
+    else:
+        count = 0
+
+    return dict(carrito_count=count)
 
 
 # =========================

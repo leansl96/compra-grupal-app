@@ -24,7 +24,12 @@ h1 {
 }
 
 .logo {
-    width: 180px;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 100px;
 }
 
 /* =========================
@@ -34,9 +39,8 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70vh;
+    height: calc(100vh - 80px);
 }
-
 .login-container {
     background: white;
     width: 320px;
@@ -216,4 +220,57 @@ button {
 ========================= */
 .top-bar {
     margin-bottom: 20px;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #232f3e;
+    padding: 10px 20px;
+    color: white;
+}
+
+/* Logo */
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff9900;
+    text-decoration: none;
+}
+
+/* Buscador */
+.nav-center form {
+    display: flex;
+}
+
+.nav-center input {
+    padding: 5px;
+    border-radius: 4px 0 0 4px;
+    border: none;
+    width: 200px;
+}
+
+.nav-center button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #ff9900;
+    cursor: pointer;
+}
+
+/* Links derecha */
+.nav-right a {
+    margin-left: 15px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-right a:hover {
+    text-decoration: underline;
+}
+
+.logout {
+    color: #ff4d4d;
 }
