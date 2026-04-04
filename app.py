@@ -42,9 +42,6 @@ def calcular_progreso(producto):
 # =========================
 @app.route('/')
 def home():
-    if 'usuario_id' not in session:
-        return redirect(url_for('login'))
-
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM productos')
@@ -123,7 +120,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('login'))
+    return redirect(url_for('home'))
 
 
 # =========================
