@@ -16,48 +16,82 @@
 
     <h1>🛒 Productos Disponibles</h1>
 
-    <!-- 🔥 CARRUSEL -->
-    <div class="carrusel-container">
+    <!-- =========================
+         CONTENEDOR PRINCIPAL: CARRUSEL + FILTROS
+    ========================== -->
+    <div class="productos-filtros-container">
 
-        <!-- Flecha izquierda -->
-        <button class="flecha izquierda" onclick="scrollProductos(-1)">❮</button>
+        <!-- CARRUSEL DE PRODUCTOS -->
+        <div class="carrusel-container">
 
-        <!-- PRODUCTOS -->
-        <div class="productos-scroll" id="scrollProductos">
+            <!-- Flecha izquierda -->
+            <button class="flecha izquierda" onclick="scrollProductos(-1)">❮</button>
 
-            {% for producto in productos %}
-            <a href="{{ url_for('detalle_producto', producto_id=producto[0]) }}" class="producto-link">
-                <div class="producto">
-                    <h2>{{ producto[1] }}</h2> 
-                    <img src="{{ url_for('static', filename='img/' ~ producto[7]) }}" alt="Producto">
-                    <p><strong>💲 Precio:</strong> ${{ producto[2] }}</p>
-                    <p><strong>👥 Compradores:</strong> {{ producto[5] }} / {{ producto[4] }}</p>
+            <div class="productos-scroll" id="scrollProductos">
+                {% for producto in productos %}
+                <a href="{{ url_for('detalle_producto', producto_id=producto[0]) }}" 
+                   class="producto-link" data-categoria="{{ producto[8] }}">
+                    <div class="producto">
+                        <h2>{{ producto[1] }}</h2> 
+                        <img src="{{ url_for('static', filename='img/' ~ producto[7]) }}" alt="{{ producto[1] }}">
+                        <p><strong>💲 Precio:</strong> ${{ producto[2] }}</p>
+                        <p><strong>👥 Compradores:</strong> {{ producto[5] }} / {{ producto[4] }}</p>
 
-                    <!-- Barra de progreso ocultada en index -->
-                    <div class="barra-progreso">
-                        <div class="relleno"
-                             style="width: {{ producto[6] }}%; background-color: {{ producto[7] }};">
-                            {{ producto[6] }}%
+                        <div class="barra-progreso">
+                            <div class="relleno" style="width: {{ producto[6] }}%; background-color: {{ producto[7] }};">
+                                {{ producto[6] }}%
+                            </div>
                         </div>
-                    </div>
 
-                    {% if producto[5] >= producto[4] %}
-                        <p class="mensaje-exito">🎉 ¡Compra grupal ACTIVADA!</p>
-                    {% else %}
-                        <p class="mensaje-alerta">🔥 Faltan {{ producto[4] - producto[5] }} personas</p>
-                    {% endif %}
-                </div>
-            </a>
-            {% endfor %}
+                        {% if producto[5] >= producto[4] %}
+                            <p class="mensaje-exito">🎉 ¡Compra grupal ACTIVADA!</p>
+                        {% else %}
+                            <p class="mensaje-alerta">🔥 Faltan {{ producto[4] - producto[5] }} personas</p>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+
+            <!-- Flecha derecha -->
+            <button class="flecha derecha" onclick="scrollProductos(1)">❯</button>
 
         </div>
 
-        <!-- Flecha derecha -->
-        <button class="flecha derecha" onclick="scrollProductos(1)">❯</button>
+        <!-- =========================
+             FILTROS A LA DERECHA
+        ========================== -->
+        <aside class="filtros-sidebar">
+            <h3>Filtrar por categoría</h3>
+            <button class="btn btn-volver" onclick="filtrarCategoria('')">Todos</button>
+            <button class="btn btn-volver" onclick="filtrarCategoria('Categoría 1')">Categoría 1</button>
+            <button class="btn btn-volver" onclick="filtrarCategoria('Categoría 2')">Categoría 2</button>
+            <button class="btn btn-volver" onclick="filtrarCategoria('Categoría 3')">Categoría 3</button>
+        </aside>
 
     </div>
 
-    <!-- JS -->
+    <!-- 🔹 SCRIPT PARA FILTROS -->
+    <script>
+        function filtrarCategoria(categoria) {
+            document.querySelectorAll('.producto-link').forEach(link => {
+                const prodCat = link.dataset.categoria || '';
+                if(categoria === '' || prodCat === categoria) {
+                    link.style.display = 'flex';
+                } else {
+                    link.style.display = 'none';
+                }
+            });
+        }
+
+        function scrollProductos(direccion) {
+            const contenedor = document.getElementById('scrollProductos');
+            const ancho = contenedor.clientWidth;
+            contenedor.scrollBy({ left: direccion * ancho, behavior: 'smooth' });
+        }
+    </script>
+
+    <!-- JS GENERAL -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>

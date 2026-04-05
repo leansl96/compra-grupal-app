@@ -31,7 +31,7 @@ h1 {
     padding: 25px 30px;
     color: white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    flex-wrap: wrap; /* para que se acomode en móvil */
+    flex-wrap: wrap; /* responsive */
 }
 
 .top-bar {
@@ -174,8 +174,11 @@ h1 {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-    transition: 0.3s;
-    min-height: 270px; /* 🔥 mantiene altura consistente */
+    transition: transform 0.3s, box-shadow 0.3s;
+    min-height: 270px; /* altura mínima consistente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .producto:hover {
@@ -277,6 +280,7 @@ button {
 .productos-scroll::-webkit-scrollbar {
     height: 8px;
 }
+
 .productos-scroll::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 10px;
@@ -304,6 +308,40 @@ button {
     background: rgba(0,0,0,0.8);
 }
 
+/* Contenedor principal: carrusel + filtros */
+.productos-filtros-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Sidebar de filtros */
+.filtros-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 150px;
+}
+
+.filtros-sidebar h3 {
+    margin-bottom: 10px;
+}
+
+/* Móvil: sidebar pasa arriba y se centra */
+@media (max-width: 900px) {
+    .productos-filtros-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .filtros-sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
 /* =========================
    RESPONSIVE (MÓVIL / TABLET)
 ========================= */
@@ -322,7 +360,7 @@ button {
     .search-box input { width: 180px; }
     .nav-center { justify-content: center; margin-bottom: 10px; }
     h1 { font-size: 20px; }
-    .producto { min-width: 220px; padding: 15px; }
+    .producto { min-width: 220px; padding: 15px; min-height: 280px; }
     .producto img { max-height: 120px; }
     .flecha { font-size: 20px; padding: 8px; }
 }
@@ -334,7 +372,7 @@ button {
     .logo img { width: 70px; height: 70px; }
     .search-box input { width: 140px; }
     h1 { font-size: 18px; }
-    .producto { min-width: 180px; padding: 10px; }
+    .producto { min-width: 180px; padding: 10px; min-height: 260px; }
     .producto img { max-height: 100px; }
     .flecha { font-size: 18px; padding: 6px; }
 }
@@ -347,5 +385,5 @@ button {
 }
 
 .index-page .producto {
-    min-height: 320px; /* asegura altura consistente */
+    min-height: 320px; /* asegura altura consistente en index */
 }
