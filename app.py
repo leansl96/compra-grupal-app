@@ -205,16 +205,50 @@ def carrito():
     cursor = conn.cursor()
 
     cursor.execute('''
-        SELECT p.nombre, p.precio
+        SELECT p.id, p.nombre, p.precio, COUNT(*) as cantidad
         FROM carrito c
         JOIN productos p ON c.producto_id = p.id
         WHERE c.usuario = ?
+        GROUP BY p.id
     ''', (usuario,))
 
-    items = cursor.fetchall()
+    filas = cursor.fetchall()
     conn.close()
 
+    items = []
+    for f in filas:
+        items.append({
+            "id": f[0],
+            "nombre": f[1],
+            "precio": f[2],
+            "cantidad": f[3]
+        })
+
     return render_template('carrito.html', items=items)
+
+@app.route('/eliminar_del_carrito/<int:producto_id>')
+def eliminar_del_carrito(producto_id):
+    if 'usuario_id' not in session:
+        return redirect(url_for('login'))
+
+    usuario = session['usuario_nombre']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        DELETE FROM carrito
+        WHERE id = (
+            SELECT id FROM carrito
+            WHERE producto_id = ? AND usuario = ?
+            LIMIT 1
+        )
+    ''', (producto_id, usuario))
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('carrito'))
 
 
 # =========================
@@ -246,4 +280,4 @@ def detalle_producto(producto_id):
 # RUN
 # =========================
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    app.run(debug=True, host="0.0.0.0", port=10000)

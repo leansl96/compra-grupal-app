@@ -6,22 +6,21 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+
 {% include 'navbar.html' %}
-    <h1>🛒 Productos Disponibles</h1>
 
-    {% if session.get('usuario_id') %}
-    <a href="{{ url_for('carrito') }}">
-        <button> Ver Carrito</button>
-    </a>
+<h1>🛒 Productos Disponibles</h1>
 
-    <a href="{{ url_for('logout') }}">
-        <button style="background-color:#f44336;">🚪 Cerrar sesión</button>
-    </a>
+<!-- 🔥 CARRUSEL COMPLETO -->
+<div class="carrusel-container">
 
-    {% endif %}
-    <hr>
+    <!-- Flecha izquierda -->
+    <button class="flecha izquierda" onclick="scrollProductos(-1)">❮</button>
 
-    {% for producto in productos %}
+    <!-- PRODUCTOS -->
+    <div class="productos-scroll" id="scrollProductos">
+
+        {% for producto in productos %}
 
         <div class="producto">
 
@@ -33,7 +32,7 @@
 
             <p><strong>👥 Compradores:</strong> {{ producto[5] }} / {{ producto[4] }}</p>
 
-            <!-- Barra de progreso CALCULADA -->
+            <!-- Barra de progreso -->
             {% set progreso = (producto[5] / producto[4]) * 100 if producto[4] > 0 else 0 %}
             {% if progreso > 100 %}
                 {% set progreso = 100 %}
@@ -54,7 +53,7 @@
                 </div>
             </div>
 
-            <!-- Mensaje dinámico -->
+            <!-- Mensaje -->
             {% if producto[5] >= producto[4] %}
                 <p style="color: green; font-weight: bold;">
                     🎉 ¡Compra grupal ACTIVADA!
@@ -80,9 +79,17 @@
 
         </div>
 
-        <hr>
+        {% endfor %}
 
-    {% endfor %}
+    </div>
+
+    <!-- Flecha derecha -->
+    <button class="flecha derecha" onclick="scrollProductos(1)">❯</button>
+
+</div>
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>
 </html>

@@ -1,11 +1,15 @@
 /* =========================
-   GENERAL
+   RESET & GENERAL
 ========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
     text-align: center;
 }
 
@@ -14,26 +18,7 @@ h1 {
 }
 
 /* =========================
-   HEADER (LOGO)
-========================= */
-.header {
-    width: 100%;
-    padding: 20px 40px;
-    box-sizing: border-box;
-    text-align: left;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-}
-
-.logo img {
-    height: 100px;
-}
-
-/* =========================
-   NAVBAR PRO
+   NAVBAR
 ========================= */
 .navbar {
     display: flex;
@@ -45,8 +30,18 @@ h1 {
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
+/* LOGO */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+}
+
 /* =========================
-   BUSCADOR PRO
+   BUSCADOR
 ========================= */
 .search-box {
     position: relative;
@@ -67,9 +62,9 @@ h1 {
     font-size: 14px;
 }
 
-/* LUPA (SIN FONDO) */
+/* LUPA */
 .search-btn {
-    all: unset; /* 🔥 elimina TODOS los estilos de botón */
+    all: unset;
     position: absolute;
     right: 12px;
     cursor: pointer;
@@ -77,7 +72,6 @@ h1 {
     color: #555;
 }
 
-/* HOVER */
 .search-btn:hover {
     transform: scale(1.2);
     color: #000;
@@ -138,13 +132,13 @@ h1 {
 }
 
 /* =========================
-   TARJETAS
+   PRODUCTOS (CARD)
 ========================= */
 .producto {
     background: white;
+    min-width: 300px;
+    flex: 0 0 auto;
     padding: 20px;
-    margin: 20px auto;
-    width: 320px;
     border-radius: 15px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.15);
     transition: 0.3s;
@@ -154,31 +148,31 @@ h1 {
     transform: translateY(-5px);
 }
 
-/* =========================
-   IMÁGENES
-========================= */
-img {
+/* IMÁGENES */
+.producto img {
+    width: 100%;
+    max-width: 200px;
     border-radius: 10px;
     margin-bottom: 10px;
 }
 
 /* =========================
-   PROGRESO
+   BARRA DE PROGRESO
 ========================= */
 .barra-progreso {
     width: 70%;
-    margin: 20px auto;
+    margin: 15px auto;
     background-color: #ddd;
     border-radius: 20px;
-    height: 30px;
+    height: 25px;
     overflow: hidden;
     box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
 
 .barra-progreso .relleno {
     height: 100%;
-    line-height: 30px;
-    color: white;
+    line-height: 25px;
+    color: black;
     font-weight: bold;
     text-align: center;
     transition: width 0.6s ease-in-out;
@@ -256,4 +250,54 @@ button {
 .mensaje-alerta {
     color: orange;
     font-weight: bold;
+}
+
+/* =========================
+   CARRUSEL
+========================= */
+.carrusel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* SCROLL HORIZONTAL */
+.productos-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px;
+    scroll-behavior: smooth;
+}
+
+/* ocultar scrollbar (opcional) */
+.productos-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.productos-scroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+/* FLECHAS */
+.flecha {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.izquierda { left: 10px; }
+.derecha { right: 10px; }
+
+.flecha:hover {
+    background: rgba(0,0,0,0.8);
 }
