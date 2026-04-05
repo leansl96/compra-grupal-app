@@ -23,12 +23,15 @@
 
         <!-- CARRUSEL DE PRODUCTOS -->
         <div class="carrusel-container">
+
+            <!-- Flecha izquierda -->
             <button class="flecha izquierda" onclick="scrollProductos(-1)">❮</button>
+
             <div class="productos-scroll" id="scrollProductos">
                 {% for producto in productos %}
                 <a href="{{ url_for('detalle_producto', producto_id=producto[0]) }}" 
                    class="producto-link" data-categoria="{{ producto[8] }}">
-                    <div class="producto animate-product">
+                    <div class="producto">
                         <h2>{{ producto[1] }}</h2> 
                         <img src="{{ url_for('static', filename='img/' ~ producto[7]) }}" alt="{{ producto[1] }}">
                         <p><strong>💲 Precio:</strong> ${{ producto[2] }}</p>
@@ -49,21 +52,21 @@
                 </a>
                 {% endfor %}
             </div>
+
+            <!-- Flecha derecha -->
             <button class="flecha derecha" onclick="scrollProductos(1)">❯</button>
+
         </div>
 
         <!-- =========================
-             FILTROS A LA DERECHA (COLAPSABLES)
+             FILTROS A LA DERECHA
         ========================== -->
         <aside class="filtros-sidebar">
             <h3>Filtrar por categoría</h3>
-            <button class="btn-filtro-toggle" onclick="toggleFiltros()">Mostrar/Ocultar filtros</button>
-            <div class="filtros-lista" id="filtrosLista">
-                <button class="btn btn-filtro" onclick="filtrarCategoria('')">Todos</button>
-                <button class="btn btn-filtro" onclick="filtrarCategoria('Categoría 1')">Categoría 1</button>
-                <button class="btn btn-filtro" onclick="filtrarCategoria('Categoría 2')">Categoría 2</button>
-                <button class="btn btn-filtro" onclick="filtrarCategoria('Categoría 3')">Categoría 3</button>
-            </div>
+            <button class="btn btn-volver" onclick="filtrarCategoria('')">Todos</button>
+            <button class="btn btn-volver" onclick="filtrarCategoria('Categoría 1')">Categoría 1</button>
+            <button class="btn btn-volver" onclick="filtrarCategoria('Categoría 2')">Categoría 2</button>
+            <button class="btn btn-volver" onclick="filtrarCategoria('Categoría 3')">Categoría 3</button>
         </aside>
 
     </div>
@@ -75,16 +78,10 @@
                 const prodCat = link.dataset.categoria || '';
                 if(categoria === '' || prodCat === categoria) {
                     link.style.display = 'flex';
-                    link.querySelector('.producto').classList.add('animate-product');
                 } else {
                     link.style.display = 'none';
                 }
             });
-        }
-
-        function toggleFiltros() {
-            const lista = document.getElementById('filtrosLista');
-            lista.classList.toggle('visible');
         }
 
         function scrollProductos(direccion) {
