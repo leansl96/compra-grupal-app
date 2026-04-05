@@ -6,10 +6,24 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-
+<div class="top-bar"></div>
 {% include 'navbar.html' %}
 
 <h1>🧺 Tu Carrito</h1>
+
+<div style="margin-bottom: 20px;">
+
+    {% if session.get('ultimo_producto') %}
+        <a href="{{ url_for('detalle_producto', producto_id=session['ultimo_producto']) }}">
+            <button>⬅ Volver al producto</button>
+        </a>
+    {% else %}
+        <a href="{{ url_for('home') }}">
+            <button>⬅ Volver a productos</button>
+        </a>
+    {% endif %}
+
+</div>
 
 <hr>
 

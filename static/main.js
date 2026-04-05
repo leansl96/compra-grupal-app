@@ -1,8 +1,5 @@
 function scrollProductos(direccion) {
     const contenedor = document.getElementById("scrollProductos");
-
-    contenedor.scrollBy({
-        left: direccion * 300,
-        behavior: "smooth"
-    });
+    const ancho = contenedor.offsetWidth;
+    contenedor.scrollBy({ left: direccion * ancho / 2, behavior: 'smooth' });
 }

@@ -236,6 +236,7 @@ def eliminar_del_carrito(producto_id):
     conn = get_db_connection()
     cursor = conn.cursor()
 
+    # 🔥 1. Eliminar UNA unidad del carrito
     cursor.execute('''
         DELETE FROM carrito
         WHERE id = (
@@ -244,6 +245,16 @@ def eliminar_del_carrito(producto_id):
             LIMIT 1
         )
     ''', (producto_id, usuario))
+
+    # 🔥 2. Restar comprador (pero sin bajar de 0)
+    cursor.execute('''
+        UPDATE productos
+        SET compradores_actual = CASE
+            WHEN compradores_actual > 0 THEN compradores_actual - 1
+            ELSE 0
+        END
+        WHERE id = ?
+    ''', (producto_id,))
 
     conn.commit()
     conn.close()
@@ -256,8 +267,10 @@ def eliminar_del_carrito(producto_id):
 # =========================
 @app.route('/producto/<int:producto_id>')
 def detalle_producto(producto_id):
-    if 'usuario_id' not in session:
-        return redirect(url_for('login'))
+    # Ya no necesitamos verificar login para ver el producto
+
+    # 🔥 GUARDAR ÚLTIMO PRODUCTO opcional (solo si quieres rastrear)
+    session['ultimo_producto'] = producto_id
 
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -270,11 +283,9 @@ def detalle_producto(producto_id):
         return "Producto no encontrado", 404
 
     progreso, color = calcular_progreso(producto)
-
     producto = producto + (progreso, color)
 
     return render_template('producto.html', producto=producto)
-
 
 # =========================
 # RUN

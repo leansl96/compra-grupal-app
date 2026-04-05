@@ -7,89 +7,59 @@
 </head>
 <body>
 
-{% include 'navbar.html' %}
+    <!-- 🔥 BARRA SUPERIOR -->
+    <div class="top-bar"></div>
 
-<h1>🛒 Productos Disponibles</h1>
+    <!-- 🔥 NAVBAR -->
+    {% include 'navbar.html' %}
 
-<!-- 🔥 CARRUSEL COMPLETO -->
-<div class="carrusel-container">
+    <h1>🛒 Productos Disponibles</h1>
 
-    <!-- Flecha izquierda -->
-    <button class="flecha izquierda" onclick="scrollProductos(-1)">❮</button>
+    <!-- 🔥 CARRUSEL -->
+    <div class="carrusel-container">
 
-    <!-- PRODUCTOS -->
-    <div class="productos-scroll" id="scrollProductos">
+        <!-- Flecha izquierda -->
+        <button class="flecha izquierda" onclick="scrollProductos(-1)">❮</button>
 
-        {% for producto in productos %}
+        <!-- PRODUCTOS -->
+        <div class="productos-scroll" id="scrollProductos">
 
-        <div class="producto">
+            {% for producto in productos %}
+            <a href="{{ url_for('detalle_producto', producto_id=producto[0]) }}" class="producto-link">
+                <div class="producto">
+                    <h2>{{ producto[1] }}</h2>
+                    <img src="{{ url_for('static', filename='img/' ~ producto[7]) }}" alt="Producto">
 
-            <h2>{{ producto[1] }}</h2>
+                    <p><strong>💲 Precio:</strong> ${{ producto[2] }}</p>
+                    <p><strong>👥 Compradores:</strong> {{ producto[5] }} / {{ producto[4] }}</p>
 
-            <img src="{{ url_for('static', filename='img/' + producto[7]) }}" width="200">
+                    <div class="barra-progreso">
+                        <div class="relleno"
+                             style="width: {{ producto[6] }}%; background-color: {{ producto[7] }};">
+                            {{ producto[6] }}%
+                        </div>
+                    </div>
 
-            <p><strong>💲 Precio:</strong> ${{ producto[2] }}</p>
+                    <!-- Estado -->
+                    {% if producto[5] >= producto[4] %}
+                        <p class="mensaje-exito">🎉 ¡Compra grupal ACTIVADA!</p>
+                    {% else %}
+                        <p class="mensaje-alerta">🔥 Faltan {{ producto[4] - producto[5] }} personas</p>
+                    {% endif %}
 
-            <p><strong>👥 Compradores:</strong> {{ producto[5] }} / {{ producto[4] }}</p>
-
-            <!-- Barra de progreso -->
-            {% set progreso = (producto[5] / producto[4]) * 100 if producto[4] > 0 else 0 %}
-            {% if progreso > 100 %}
-                {% set progreso = 100 %}
-            {% endif %}
-
-            {% if progreso < 50 %}
-                {% set color = '#f44336' %}
-            {% elif progreso < 100 %}
-                {% set color = '#ffeb3b' %}
-            {% else %}
-                {% set color = '#4caf50' %}
-            {% endif %}
-
-            <div class="barra-progreso">
-                <div class="relleno"
-                     style="width: {{ progreso }}%; background-color: {{ color }};">
-                    {{ progreso|round(0) }}%
                 </div>
-            </div>
-
-            <!-- Mensaje -->
-            {% if producto[5] >= producto[4] %}
-                <p style="color: green; font-weight: bold;">
-                    🎉 ¡Compra grupal ACTIVADA!
-                </p>
-            {% else %}
-                <p style="color: orange; font-weight: bold;">
-                    🔥 Faltan {{ producto[4] - producto[5] }} personas
-                </p>
-            {% endif %}
-
-            <!-- Botones -->
-            <a href="{{ url_for('detalle_producto', producto_id=producto[0]) }}">
-                <button>🔍 Ver detalle</button>
             </a>
-
-            {% if producto[3] > 0 %}
-                <a href="{{ url_for('unirse', producto_id=producto[0]) }}">
-                    <button>🛒 Unirse al grupo</button>
-                </a>
-            {% else %}
-                <p style="color:red; font-weight:bold;">❌ Sin stock</p>
-            {% endif %}
+            {% endfor %}
 
         </div>
 
-        {% endfor %}
+        <!-- Flecha derecha -->
+        <button class="flecha derecha" onclick="scrollProductos(1)">❯</button>
 
     </div>
 
-    <!-- Flecha derecha -->
-    <button class="flecha derecha" onclick="scrollProductos(1)">❯</button>
-
-</div>
-
-<!-- JS -->
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>
 </html>
