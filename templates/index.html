@@ -17,57 +17,54 @@
     <h1>🛒 Productos Disponibles</h1>
 
     <!-- =========================
-         CONTENEDOR PRINCIPAL: CARRUSEL + FILTROS
+         FILTROS / PRODUCTOS
     ========================== -->
-    <div class="productos-filtros-container">
-
-        <!-- CARRUSEL DE PRODUCTOS -->
-        <div class="carrusel-container">
-
-            <!-- Flecha izquierda -->
-            <button class="flecha izquierda" onclick="scrollProductos(-1)">❮</button>
-
-            <div class="productos-scroll" id="scrollProductos">
-                {% for producto in productos %}
-                <a href="{{ url_for('detalle_producto', producto_id=producto[0]) }}" 
-                   class="producto-link" data-categoria="{{ producto[8] }}">
-                    <div class="producto">
-                        <h2>{{ producto[1] }}</h2> 
-                        <img src="{{ url_for('static', filename='img/' ~ producto[7]) }}" alt="{{ producto[1] }}">
-                        <p><strong>💲 Precio:</strong> ${{ producto[2] }}</p>
-                        <p><strong>👥 Compradores:</strong> {{ producto[5] }} / {{ producto[4] }}</p>
-
-                        <div class="barra-progreso">
-                            <div class="relleno" style="width: {{ producto[6] }}%; background-color: {{ producto[7] }};">
-                                {{ producto[6] }}%
-                            </div>
-                        </div>
-
-                        {% if producto[5] >= producto[4] %}
-                            <p class="mensaje-exito">🎉 ¡Compra grupal ACTIVADA!</p>
-                        {% else %}
-                            <p class="mensaje-alerta">🔥 Faltan {{ producto[4] - producto[5] }} personas</p>
-                        {% endif %}
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-
-            <!-- Flecha derecha -->
-            <button class="flecha derecha" onclick="scrollProductos(1)">❯</button>
-
-        </div>
-
-        <!-- =========================
-             FILTROS A LA DERECHA
-        ========================== -->
-        <aside class="filtros-sidebar">
-            <h3>Filtrar por categoría</h3>
+    <section class="filtros">
+        <p>Filtra tus productos por categoría:</p>
+        <div class="filtros-botones">
             <button class="btn btn-volver" onclick="filtrarCategoria('')">Todos</button>
             <button class="btn btn-volver" onclick="filtrarCategoria('Categoría 1')">Categoría 1</button>
             <button class="btn btn-volver" onclick="filtrarCategoria('Categoría 2')">Categoría 2</button>
             <button class="btn btn-volver" onclick="filtrarCategoria('Categoría 3')">Categoría 3</button>
-        </aside>
+        </div>
+    </section>
+
+    <!-- 🔥 CARRUSEL DE PRODUCTOS -->
+    <div class="carrusel-container">
+
+        <!-- Flecha izquierda -->
+        <button class="flecha izquierda" onclick="scrollProductos(-1)">❮</button>
+
+        <!-- PRODUCTOS -->
+        <div class="productos-scroll" id="scrollProductos">
+            {% for producto in productos %}
+            <a href="{{ url_for('detalle_producto', producto_id=producto[0]) }}" 
+               class="producto-link" data-categoria="{{ producto[8] }}">
+                <div class="producto">
+                    <h2>{{ producto[1] }}</h2> 
+                    <img src="{{ url_for('static', filename='img/' ~ producto[7]) }}" alt="{{ producto[1] }}">
+                    <p><strong>💲 Precio:</strong> ${{ producto[2] }}</p>
+                    <p><strong>👥 Compradores:</strong> {{ producto[5] }} / {{ producto[4] }}</p>
+
+                    <!-- Barra de progreso (oculta en index) -->
+                    <div class="barra-progreso">
+                        <div class="relleno" style="width: {{ producto[6] }}%; background-color: {{ producto[7] }};">
+                            {{ producto[6] }}%
+                        </div>
+                    </div>
+
+                    {% if producto[5] >= producto[4] %}
+                        <p class="mensaje-exito">🎉 ¡Compra grupal ACTIVADA!</p>
+                    {% else %}
+                        <p class="mensaje-alerta">🔥 Faltan {{ producto[4] - producto[5] }} personas</p>
+                    {% endif %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Flecha derecha -->
+        <button class="flecha derecha" onclick="scrollProductos(1)">❯</button>
 
     </div>
 
@@ -84,6 +81,7 @@
             });
         }
 
+        // Función para scroll del carrusel
         function scrollProductos(direccion) {
             const contenedor = document.getElementById('scrollProductos');
             const ancho = contenedor.clientWidth;
