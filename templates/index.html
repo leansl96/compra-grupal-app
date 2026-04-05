@@ -6,7 +6,7 @@
     <title>Productos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body class="index-page">
 
     <!-- 🔥 BARRA SUPERIOR -->
     <div class="top-bar"></div>
@@ -26,28 +26,28 @@
         <div class="productos-scroll" id="scrollProductos">
 
             {% for producto in productos %}
-           <a href="{{ url_for('detalle_producto', producto_id=producto[0]) }}" class="producto-link">
-    <div class="producto">
-        <h2>{{ producto[1] }}</h2> 
-        <img src="{{ url_for('static', filename='img/' ~ producto[7]) }}" alt="Producto">
-        <p><strong>💲 Precio:</strong> ${{ producto[2] }}</p>
-        <p><strong>👥 Compradores:</strong> {{ producto[5] }} / {{ producto[4] }}</p>
+            <a href="{{ url_for('detalle_producto', producto_id=producto[0]) }}" class="producto-link">
+                <div class="producto">
+                    <h2>{{ producto[1] }}</h2> 
+                    <img src="{{ url_for('static', filename='img/' ~ producto[7]) }}" alt="Producto">
+                    <p><strong>💲 Precio:</strong> ${{ producto[2] }}</p>
+                    <p><strong>👥 Compradores:</strong> {{ producto[5] }} / {{ producto[4] }}</p>
 
-        <!-- Barra de progreso y estado dentro del div.producto -->
-        <div class="barra-progreso">
-    <div class="relleno"
-         style="width: {{ producto[6] }}%; background-color: {{ producto[7] }};">
-        {{ producto[6] }}%
-    </div>
-</div>
+                    <!-- Barra de progreso ocultada en index -->
+                    <div class="barra-progreso">
+                        <div class="relleno"
+                             style="width: {{ producto[6] }}%; background-color: {{ producto[7] }};">
+                            {{ producto[6] }}%
+                        </div>
+                    </div>
 
-        {% if producto[5] >= producto[4] %}
-            <p class="mensaje-exito">🎉 ¡Compra grupal ACTIVADA!</p>
-        {% else %}
-            <p class="mensaje-alerta">🔥 Faltan {{ producto[4] - producto[5] }} personas</p>
-        {% endif %}
-    </div>
-</a>
+                    {% if producto[5] >= producto[4] %}
+                        <p class="mensaje-exito">🎉 ¡Compra grupal ACTIVADA!</p>
+                    {% else %}
+                        <p class="mensaje-alerta">🔥 Faltan {{ producto[4] - producto[5] }} personas</p>
+                    {% endif %}
+                </div>
+            </a>
             {% endfor %}
 
         </div>

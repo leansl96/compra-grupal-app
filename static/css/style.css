@@ -175,6 +175,7 @@ h1 {
     border-radius: 15px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.15);
     transition: 0.3s;
+    min-height: 270px; /* 🔥 mantiene altura consistente */
 }
 
 .producto:hover {
@@ -336,4 +337,15 @@ button {
     .producto { min-width: 180px; padding: 10px; }
     .producto img { max-height: 100px; }
     .flecha { font-size: 18px; padding: 6px; }
+}
+
+/* =========================
+   🔥 INDEX.HTML: ocultar barra de progreso
+========================= */
+.index-page .barra-progreso {
+    display: none; /* quita visualmente la barra */
+}
+
+.index-page .producto {
+    min-height: 320px; /* asegura altura consistente */
 }
