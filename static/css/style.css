@@ -26,13 +26,14 @@ h1 {
     position: relative;
     display: flex;
     justify-content: space-between;
-    padding-left: 120px;
     align-items: center;
     background-color: #232f3e;
     padding: 25px 30px;
     color: white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    flex-wrap: wrap; /* para que se acomode en móvil */
 }
+
 .top-bar {
     height: 20px;
     background: linear-gradient(to bottom, #ff9900, #ffb84d, #232f3e);
@@ -44,21 +45,24 @@ h1 {
 .logo {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
     left: 20px;
+    transform: translateY(-50%);
 }
 
 .logo img {
+    width: 110px;
     height: 110px;
+    object-fit: cover; /* evita deformación */
+    border-radius: 50%; /* 🔥 perfectamente redondo */
     background: white;
-    border-radius: 50%;
     padding: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    transition: 0.3s ease;
+    transition: transform 0.8s ease-in-out;
+    cursor: pointer;
 }
 
 .logo img:hover {
-    transform: scale(1.08);
+    transform: rotate(360deg) scale(1.08);
 }
 
 /* =========================
@@ -68,6 +72,7 @@ h1 {
     flex: 1;
     display: flex;
     justify-content: center;
+    margin: 10px 0;
 }
 
 /* =========================
@@ -303,51 +308,32 @@ button {
 ========================= */
 @media (max-width: 900px) {
     .navbar {
-        flex-direction: column;
         padding: 15px;
     }
-    .search-box input {
-        width: 180px;
+    .logo {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        margin-bottom: 10px;
     }
-    h1 {
-        font-size: 20px;
-    }
-    .producto {
-        min-width: 220px;
-        padding: 15px;
-    }
-    .producto img {
-        max-height: 120px;
-    }
-    .flecha {
-        font-size: 20px;
-        padding: 8px;
-    }
+    .logo img { width: 90px; height: 90px; }
+    .search-box input { width: 180px; }
+    .nav-center { justify-content: center; margin-bottom: 10px; }
+    h1 { font-size: 20px; }
+    .producto { min-width: 220px; padding: 15px; }
+    .producto img { max-height: 120px; }
+    .flecha { font-size: 20px; padding: 8px; }
 }
 
 @media (max-width: 600px) {
     .navbar {
         padding: 10px;
     }
-    .search-box input {
-        width: 140px;
-    }
-    h1 {
-        font-size: 18px;
-    }
-    .producto {
-        min-width: 180px;
-        padding: 10px;
-    }
-    .producto img {
-        max-height: 100px;
-    }
-    .flecha {
-        font-size: 18px;
-        padding: 6px;
-    }
-}
-.logo img:hover {
-    transform: rotate(360deg) scale(1.08); /* 🔥 gira y hace un leve zoom */
-    transition: transform 0.8s ease-in-out;
+    .logo img { width: 70px; height: 70px; }
+    .search-box input { width: 140px; }
+    h1 { font-size: 18px; }
+    .producto { min-width: 180px; padding: 10px; }
+    .producto img { max-height: 100px; }
+    .flecha { font-size: 18px; padding: 6px; }
 }
