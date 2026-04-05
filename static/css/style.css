@@ -347,3 +347,7 @@ button {
         padding: 6px;
     }
 }
+.logo img:hover {
+    transform: rotate(360deg) scale(1.08); /* 🔥 gira y hace un leve zoom */
+    transition: transform 0.8s ease-in-out;
+}
